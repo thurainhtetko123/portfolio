@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>GED Teacher & Web Developer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+        :root {
+            --bg: #e5e7eb;
+            --surface: #ffffff;
+            --text-main: #020617;
+            --text-muted: #4b5563;
+            --border-soft: #d1d5db;
+            --accent: #0f766e;
+            --accent-soft: #e0f2f1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                sans-serif;
+            background: radial-gradient(circle at top, #f9fafb 0, var(--bg) 55%);
+            color: var(--text-main);
+        }
+
+        main {
+            padding-bottom: 3.2rem;
+            /* space for bottom nav on mobile */
+        }
+
+        section {
+            padding: 2.5rem 1.25rem 2.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        /* HERO slightly taller */
+        #hero {
+            min-height: calc(100vh - 120px);
+        }
+
+        .section-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            width: 100%;
+            background-color: var(--surface);
+            border: 1px solid var(--border-soft);
+            border-radius: 1.5rem;
+            padding: 1.75rem 1.5rem;
+            display: grid;
+            gap: 1.5rem;
+            box-shadow:
+                0 18px 40px rgba(15, 23, 42, 0.14),
+                0 0 0 1px rgba(15, 23, 42, 0.02);
+        }
+
+        @media (min-width: 768px) {
+            .section-inner {
+                padding: 2rem;
+                gap: 2rem;
+            }
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(248, 250, 252, 0.96);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-soft);
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .header-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0.7rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-mark {
+            width: 30px;
+            height: 30px;
+            border-radius: 999px;
+            border: 1px solid #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+            background: radial-gradient(circle at 30% 0, #e5e7eb, #f9fafb);
+        }
+
+        .logo-text {
+            font-size: 0.7rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        nav {
+            display: none;
+            gap: 1.5rem;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            border-radius: 999px;
+            background-color: var(--accent);
+            transition: width 0.22s ease;
+        }
+
+        nav a:hover {
+            color: var(--text-main);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        @media (min-width: 640px) {
+            nav {
+                display: flex;
+            }
+        }
+
+        h1,
+        h2 {
+            font-weight: 650;
+        }
+
+        /* HERO */
+        .hero-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero-grid {
+                grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+            }
+        }
+
+        .hero-title {
+            font-size: 1.9rem;
+            line-height: 1.15;
+        }
+
+        @media (min-width: 640px) {
+            .hero-title {
+                font-size: 2.3rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-title {
+                font-size: 2.7rem;
+            }
+        }
+
+        .hero-title span.accent-underline {
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .hero-title span.accent-block {
+            padding: 0 0.2rem;
+            border-radius: 0.2rem;
+        }
+
+        .hero-subtext {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            max-width: 26rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 0.85rem;
+        }
+
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            border-radius: 999px;
+            border: 1px solid #020617;
+            background-color: #020617;
+            color: #f9fafb;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            cursor: pointer;
+        }
+
+        .btn-primary::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg,
+                    rgba(148, 163, 184, 0.1),
+                    rgba(15, 118, 110, 0.4),
+                    rgba(148, 163, 184, 0.1));
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+            z-index: 0;
+        }
+
+        .btn-primary span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary:hover::before {
+            transform: translateX(0);
+        }
+
+        .btn-ghost {
+            border-radius: 999px;
+            border: 1px solid #9ca3af;
+            background-color: #f9fafb;
+            color: var(--text-main);
+            padding: 0.6rem 1.3rem;
+            font-size: 0.78rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-ghost.small {
+            padding: 0.45rem 1rem;
+            font-size: 0.7rem;
+        }
+
+        .btn-ghost:hover {
+            background-color: #e5e7eb;
+            border-color: #6b7280;
+        }
+
+        .hero-modes-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .mode-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .mode-button {
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            background-color: #ffffff;
+            color: var(--text-main);
+            padding: 0.35rem 1rem;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            cursor: pointer;
+            transition:
+                background-color 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .mode-button.active {
+            background-color: #020617;
+            color: #f9fafb;
+            border-color: #020617;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.35);
+        }
+
+        .mode-card {
+            border-radius: 1rem;
+            border: 1px solid var(--border-soft);
+            background-color: #f9fafb;
+            padding: 1rem;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .mode-card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.6rem;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--text-muted);
+        }
+
+        .mode-card-title span:last-child {
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            padding: 0.12rem 0.6rem;
+            background-color: #ffffff;
+        }
+
+        /* SECTION TITLES */
+        .section-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-main);
+        }
+
+        .section-subtitle {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        /* WORK (gallery/toggle) */
+        .work-toggle {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .work-toggle-btn {
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            background-color: #ffffff;
+            color: var(--text-main);
+            padding: 0.35rem 0.9rem;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            cursor: pointer;
+            transition:
+                background-color 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .work-toggle-btn.active {
+            background-color: #020617;
+            color: #f9fafb;
+            border-color: #020617;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.35);
+        }
+
+
+        /* CONTACT TOGGLE (reuses work toggle style) */
+        .contact-toggle {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.75rem 0 0.25rem;
+        }
+
+        /* share styling with work-toggle-btn */
+        .work-toggle-btn,
+        .contact-toggle-btn {
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            background-color: #ffffff;
+            color: var(--text-main);
+            padding: 0.35rem 0.9rem;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            cursor: pointer;
+            transition:
+                background-color 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .work-toggle-btn.active,
+        .contact-toggle-btn.active {
+            background-color: #020617;
+            color: #f9fafb;
+            border-color: #020617;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.35);
+        }
+
+        .contact-card {
+            margin-top: 0.7rem;
+            border-radius: 1.1rem;
+            border: 1px solid var(--border-soft);
+            background-color: #f9fafb;
+            padding: 0.9rem 1rem;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .contact-card h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-card p {
+            margin-bottom: 0.4rem;
+        }
+
+        .contact-card a {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+
+
+        .gallery-grid {
+            display: grid;
+            gap: 0.7rem;
+        }
+
+        @media (min-width: 640px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 960px) {
+            .gallery-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        .image-card {
+            border-radius: 1.1rem;
+            border: 1px solid var(--border-soft);
+            background-color: #ffffff;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition:
+                transform 0.18s ease,
+                box-shadow 0.18s ease,
+                border-color 0.18s ease;
+        }
+
+        .image-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+            border-color: #020617;
+        }
+
+        .image-thumb {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            background-color: #e5e7eb;
+            display: block;
+        }
+
+        .image-caption {
+            padding: 0.45rem 0.7rem 0.6rem;
+            font-size: 0.74rem;
+            color: var(--text-muted);
+        }
+
+        .dev-grid {
+            display: grid;
+            gap: 0.9rem;
+        }
+
+        @media (min-width: 768px) {
+            .dev-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        .hidden-gallery {
+            display: none;
+        }
+
+        .hidden-ged {
+            display: none;
+        }
+
+        .see-more-wrapper {
+            margin-top: 0.7rem;
+        }
+
+        .see-more-wrapper.hidden {
+            display: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            height: 0 !important;
+        }
+
+
+        /* Dev project cards */
+        .project-card {
+            border-radius: 1.25rem;
+            border: 1px solid var(--border-soft);
+            background-color: #ffffff;
+            padding: 0.95rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+            transition:
+                transform 0.18s ease,
+                box-shadow 0.18s ease,
+                border-color 0.18s ease,
+                background-color 0.18s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.2);
+            border-color: #020617;
+            background-color: #f9fafb;
+        }
+
+        .project-thumb {
+            height: 90px;
+            border-radius: 0.9rem;
+            border: 1px solid #cbd5e1;
+            background: linear-gradient(135deg, #f9fafb, #e5e7eb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #1f2937;
+            font-weight: 500;
+            overflow: hidden;
+        }
+
+        .project-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .project-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .project-desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            font-size: 0.68rem;
+            margin-top: 0.25rem;
+        }
+
+        .tag {
+            border-radius: 999px;
+            background-color: #e5e7eb;
+            padding: 0.12rem 0.55rem;
+            color: #111827;
+        }
+
+        .project-actions {
+            margin-top: auto;
+            display: flex;
+            gap: 0.45rem;
+        }
+
+        .btn-small-primary {
+            flex: 1;
+            border-radius: 999px;
+            border: 1px solid #020617;
+            background-color: #020617;
+            color: #f9fafb;
+            padding: 0.4rem 0.75rem;
+            font-size: 0.72rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-small-primary::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg,
+                    rgba(148, 163, 184, 0.14),
+                    rgba(15, 118, 110, 0.4),
+                    rgba(148, 163, 184, 0.14));
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 0;
+        }
+
+        .btn-small-primary:hover::before {
+            transform: translateX(0);
+        }
+
+        .btn-small-primary span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-small-ghost {
+            flex: 1;
+            border-radius: 999px;
+            border: 1px solid #cbd5e1;
+            background-color: #ffffff;
+            color: var(--text-main);
+            padding: 0.4rem 0.75rem;
+            font-size: 0.72rem;
+            cursor: pointer;
+        }
+
+        .btn-small-ghost:hover {
+            background-color: #e5e7eb;
+        }
+
+        /* WHAT I DO */
+        .dual-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .dual-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .dual-card {
+            border-radius: 1.25rem;
+            border: 1px solid var(--border-soft);
+            padding: 1rem;
+            background-color: #f9fafb;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .dual-card h3 {
+            font-size: 0.92rem;
+            margin-bottom: 0.45rem;
+            color: var(--text-main);
+        }
+
+        .dual-card ul {
+            list-style: none;
+        }
+
+        .dual-card li {
+            margin-bottom: 0.28rem;
+        }
+
+        /* CONTACT */
+        .contact-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .contact-grid {
+                grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+            }
+        }
+
+        .contact-text {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .contact-text a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+        }
+
+        .contact-form {
+            border-radius: 1.25rem;
+            border: 1px solid var(--border-soft);
+            padding: 1rem;
+            background-color: #f9fafb;
+            font-size: 0.8rem;
+        }
+
+        .field-group {
+            margin-bottom: 0.7rem;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .field-input,
+        .field-select,
+        .field-textarea {
+            width: 100%;
+            border-radius: 0.7rem;
+            border: 1px solid var(--border-soft);
+            padding: 0.55rem 0.7rem;
+            font-size: 0.82rem;
+            color: var(--text-main);
+            background-color: #f9fafb;
+            outline: none;
+            transition:
+                border-color 0.15s ease,
+                box-shadow 0.15s ease,
+                background-color 0.15s ease;
+        }
+
+        .field-input:focus,
+        .field-select:focus,
+        .field-textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px rgba(15, 118, 110, 0.35);
+            background-color: #ffffff;
+        }
+
+        .field-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn-form {
+            width: 100%;
+            border-radius: 999px;
+            border: 1px solid #020617;
+            background-color: #020617;
+            color: #f9fafb;
+            padding: 0.55rem 0.75rem;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-form::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg,
+                    rgba(148, 163, 184, 0.12),
+                    rgba(15, 118, 110, 0.4),
+                    rgba(148, 163, 184, 0.12));
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+            z-index: 0;
+        }
+
+        .btn-form:hover::before {
+            transform: translateX(0);
+        }
+
+        .btn-form span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-note {
+            margin-top: 0.45rem;
+            font-size: 0.66rem;
+            color: var(--text-muted);
+        }
+
+        /* FOOTER (simple, not sticky) */
+        footer {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            padding: 0.6rem 1.25rem 0.85rem;
+            max-width: 960px;
+            margin: 0 auto 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--text-main);
+        }
+
+        /* BOTTOM NAV (mobile) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #020617;
+            border-top: 1px solid #111827;
+            color: #e5e7eb;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0.35rem 0.6rem;
+            font-size: 0.7rem;
+            z-index: 20;
+        }
+
+        .bottom-nav button {
+            background: none;
+            border: none;
+            color: inherit;
+            font: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.15rem;
+            cursor: pointer;
+            opacity: 0.9;
+        }
+
+        .bottom-nav button span.label {
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-size: 0.65rem;
+        }
+
+        .bottom-nav button:focus-visible {
+            outline: 2px solid #e5e7eb;
+            outline-offset: 2px;
+        }
+
+        @media (min-width: 640px) {
+            .bottom-nav {
+                display: none;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <div class="header-inner">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+                <div class="logo-mark">T</div>
+                <div class="logo-text">Thurain Htet Ko</div>
+            </div>
+            <nav>
+                <a href="#work">Work</a>
+                <a href="#what-i-do">What I do</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <section id="hero">
+            <div class="section-inner hero-grid">
+                <div>
+                    <h1 class="hero-title" style="margin-top:0.9rem;">
+                        Hello!
+                        <span class="accent-block">GED Teacher & Web Developer</span>
+                    </h1>
+
+                    <p class="hero-subtext" style="margin-top:0.7rem;">
+                        Based: Myanmar, Mandalay
+                    </p>
+
+                    <div class="hero-actions">
+                        <button class="btn-primary" onclick="scrollToSection('contact')">
+                            <span>Work with me</span>
+                        </button>
+                        <button class="btn-ghost" onclick="scrollToSection('work')">
+                            See demo work →
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="hero-modes-label">Modes</div>
+                    <div class="mode-buttons">
+                        <button class="mode-button active" data-mode="teacher">
+                            Teaching
+                        </button>
+                        <button class="mode-button" data-mode="developer">
+                            Development
+                        </button>
+                    </div>
+                    <div class="mode-card" id="mode-card">
+                        <div class="mode-card-title">
+                            <span id="mode-title">GED Teaching</span>
+                            <span>
+                                Skills
+                            </span>
+                        </div>
+                        <p id="mode-text">
+                            Math &amp; Social Studies
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WORK -->
+        <section id="work">
+            <div class="section-inner">
+                <div class="section-title-row">
+                    <h2 class="section-title">Work</h2>
+                    <div class="section-subtitle">Tap between GED &amp; Development</div>
+                </div>
+
+                <div class="work-toggle">
+                    <button class="work-toggle-btn active" data-target="ged">GED</button>
+                    <button class="work-toggle-btn" data-target="dev">Development</button>
+                </div>
+
+                <!-- GED GALLERY (first 3 visible, rest hidden until "see more") -->
+                <div id="ged-gallery" class="gallery-grid">
+                    <figure class="image-card">
+                        <img class="image-thumb" src="ged-1.jpg" alt="GED math worksheet mockup" />
+                        <figcaption class="image-caption">
+                            GED Math practice – ratios &amp; percentages.
+                        </figcaption>
+                    </figure>
+
+                    <figure class="image-card">
+                        <img class="image-thumb" src="ged-2.jpg" alt="GED social studies slides" />
+                        <figcaption class="image-caption">
+                            Social Studies notes – timelines and maps.
+                        </figcaption>
+                    </figure>
+
+                    <figure class="image-card">
+                        <img class="image-thumb" src="ged-3.jpg" alt="GED reading passage layout" />
+                        <figcaption class="image-caption">
+                            Reading practice – passage &amp; multiple choice.
+                        </figcaption>
+                    </figure>
+
+                    <!-- extra images (hidden by default) -->
+                    <figure class="image-card hidden-ged">
+                        <img class="image-thumb" src="ged-4.jpg" alt="GED exam-style question cards" />
+                        <figcaption class="image-caption">
+                            Exam-style questions with clear steps.
+                        </figcaption>
+                    </figure>
+
+                    <figure class="image-card hidden-ged">
+                        <img class="image-thumb" src="ged-5.jpg" alt="GED weekly study schedule" />
+                        <figcaption class="image-caption">
+                            Weekly study schedule – subjects &amp; hours.
+                        </figcaption>
+                    </figure>
+
+                    <figure class="image-card hidden-ged">
+                        <img class="image-thumb" src="ged-6.jpg" alt="GED formula sheet" />
+                        <figcaption class="image-caption">
+                            Formula / reference sheet for quick review.
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <div class="see-more-wrapper">
+                    <button id="ged-see-more" class="btn-ghost small">
+                        See more GED images
+                    </button>
+                </div>
+
+                <!-- DEV PROJECTS (3 project cards) -->
+                <div id="dev-gallery" class="dev-grid hidden-gallery" style="margin-top:0.4rem;">
+                    <article class="project-card">
+                        <div class="project-thumb">
+                            <img src="./images/bean.png" alt="Bean Boutique preview">
+                        </div>
+                        <div>
+                            <div class="project-title">Bean Boutique</div>
+                            <div class="project-desc">
+                                Product review style layout for a coffee brand.
+                            </div>
+                            <div class="project-tags">
+                                <span class="tag">HTML</span>
+                                <span class="tag">CSS</span>
+                                <span class="tag">Responsive</span>
+                            </div>
+                        </div>
+                        <div class="project-actions">
+                            <button class="btn-small-primary">
+                                <span>View</span>
+                            </button>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-thumb">
+                            GED Dashboard
+                        </div>
+                        <div>
+                            <div class="project-title">GED Progress Dashboard</div>
+                            <div class="project-desc">
+                                Simple dashboard to track practice tests, scores, and weak areas.
+                            </div>
+                            <div class="project-tags">
+                                <span class="tag">Layout</span>
+                                <span class="tag">UI</span>
+                            </div>
+                        </div>
+                        <div class="project-actions">
+                            <button class="btn-small-primary">
+                                <span>View</span>
+                            </button>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-thumb">
+                            Course Outline
+                        </div>
+                        <div>
+                            <div class="project-title">Course Outline Block</div>
+                            <div class="project-desc">
+                                Block for listing lessons with “Not started / In progress / Done”.
+                            </div>
+                            <div class="project-tags">
+                                <span class="tag">Cards</span>
+                                <span class="tag">Lists</span>
+                            </div>
+                        </div>
+                        <div class="project-actions">
+                            <button class="btn-small-primary">
+                                <span>View</span>
+                            </button>
+
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHAT I DO -->
+        <section id="what-i-do">
+            <div class="section-inner">
+                <div class="section-title-row">
+                    <h2 class="section-title">What I do</h2>
+                    <div class="section-subtitle">Two roles, same mindset</div>
+                </div>
+
+                <div class="dual-grid">
+                    <article class="dual-card">
+                        <h3>GED Teaching</h3>
+                        <ul>
+                            <li>• Teaching Experience: 2 years</li>
+                            <li>• Passing rate: 100%</li>
+                            <li>• Average Student Score: 170</li>
+                        </ul>
+                    </article>
+
+                    <article class="dual-card">
+                        <h3>Web Development</h3>
+                        <ul>
+                            <li>• Coding Experience: 2 years</li>
+                            <li>• Full Stack Developer</li>
+                            <li>• AI projects</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <!-- CONTACT -->
+        <section id="contact">
+            <div class="section-inner">
+                <div class="section-title-row">
+                    <h2 class="section-title">Contact</h2>
+                    <div class="section-subtitle">Pick how you want to reach me</div>
+                </div>
+
+                <div class="contact-grid">
+                    <div class="contact-text">
+                        <p>
+                            Want GED help, a small site, or both? Choose a contact method below and reach out.
+                        </p>
+
+                        <div class="contact-toggle">
+                            <button class="contact-toggle-btn active" data-contact="email">
+                                Email
+                            </button>
+                            <button class="contact-toggle-btn" data-contact="telegram">
+                                Telegram
+                            </button>
+                            <button class="contact-toggle-btn" data-contact="facebook">
+                                Facebook
+                            </button>
+                            <button class="contact-toggle-btn" data-contact="github">
+                                GitHub
+                            </button>
+                        </div>
+
+                        <div class="contact-card" id="contact-card">
+                            <h3 id="contact-title">Email</h3>
+                            <p id="contact-body">
+                                For detailed questions or sending files, email works best.
+                            </p>
+                            <a id="contact-link" href="mailto:thurainhtetko123@gmail.com" target="_blank"
+                                rel="noopener noreferrer">
+                                thurainhtetko123@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <span>© <span id="year"></span> Thurain Htet Ko</span>
+        <a href="#hero">Back to top ↑</a>
+    </footer>
+
+    <!-- Bottom nav (mobile only) -->
+    <div class="bottom-nav">
+        <button type="button" onclick="scrollToSection('work')">
+            <span>⬛</span>
+            <span class="label">Work</span>
+        </button>
+        <button type="button" onclick="scrollToSection('what-i-do')">
+            <span>📚</span>
+            <span class="label">What I do</span>
+        </button>
+        <button type="button" onclick="scrollToSection('contact')">
+            <span>✉️</span>
+            <span class="label">Contact</span>
+        </button>
+    </div>
+
+    <script>
+        // Set year
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        function scrollToSection(id) {
+            const section = document.getElementById(id);
+            if (section) {
+                section.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        }
+
+        // Mode toggle: Teaching / Development (hero)
+        const modeButtons = document.querySelectorAll(".mode-button");
+        const modeTitle = document.getElementById("mode-title");
+        const modeText = document.getElementById("mode-text");
+
+        const modeContent = {
+            teacher: {
+                title: "GED Teaching",
+                text: "Math & Social Studies"
+            },
+            developer: {
+                title: "Web Development",
+                text: "C# | Python | PHP | Git"
+            }
+        };
+
+        modeButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                modeButtons.forEach((b) => b.classList.remove("active"));
+                btn.classList.add("active");
+                const mode = btn.getAttribute("data-mode");
+                modeTitle.textContent = modeContent[mode].title;
+                modeText.textContent = modeContent[mode].text;
+            });
+        });
+
+        // Work section toggle: GED vs Development
+        const workToggleButtons = document.querySelectorAll(".work-toggle-btn");
+        const gedGallery = document.getElementById("ged-gallery");
+        const devGallery = document.getElementById("dev-gallery");
+
+        const seeMoreWrapper = document.querySelector(".see-more-wrapper");
+
+        workToggleButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                workToggleButtons.forEach((b) => b.classList.remove("active"));
+                btn.classList.add("active");
+
+                const target = btn.getAttribute("data-target");
+
+                if (target === "ged") {
+                    gedGallery.classList.remove("hidden-gallery");
+                    devGallery.classList.add("hidden-gallery");
+
+                    // Show wrapper properly
+                    seeMoreWrapper.classList.remove("hidden");
+
+                } else {
+                    devGallery.classList.remove("hidden-gallery");
+                    gedGallery.classList.add("hidden-gallery");
+
+                    // Hide wrapper AND remove padding
+                    seeMoreWrapper.classList.add("hidden");
+                }
+            });
+        });
+        ;
+
+        // GED "see more" toggle
+        const seeMoreBtn = document.getElementById("ged-see-more");
+        const extraGedImages = document.querySelectorAll(".hidden-ged");
+        let gedExpanded = false;
+
+        seeMoreBtn.addEventListener("click", () => {
+            gedExpanded = !gedExpanded;
+            extraGedImages.forEach(img => {
+                img.style.display = gedExpanded ? "flex" : "none";
+            });
+            seeMoreBtn.textContent = gedExpanded ? "See less GED images" : "See more GED images";
+        });
+
+        // Hide extra GED images initially (in case inline CSS doesn't apply in some browsers)
+        extraGedImages.forEach(img => {
+            img.style.display = "none";
+        });
+
+        function handleDemoForm(event) {
+            event.preventDefault();
+            alert("This is a demo form. Replace this handler with your own submit logic.");
+        }
+
+        const contactButtons = document.querySelectorAll(".contact-toggle-btn");
+        const contactTitle = document.getElementById("contact-title");
+        const contactBody = document.getElementById("contact-body");
+        const contactLink = document.getElementById("contact-link");
+
+        const contactData = {
+            email: {
+                title: "Email",
+                body: "For detailed questions, lesson requests, or sending files, email works best.",
+                label: "thurainhtetko123@gmail.com",
+                href: "mailto:thurainhtetko123@gmail.com"
+            },
+            telegram: {
+                title: "Telegram",
+                body: "Fast questions or quick updates. Send me a message on Telegram.",
+                label: "@thurainhtetko",
+                href: "https://t.me/thurainhtetko"
+            },
+            facebook: {
+                title: "Facebook",
+                body: "You can also message me on Facebook or check any updates I post there.",
+                label: "facebook.com/thurainhtetko",
+                href: "https://www.facebook.com/thurain.htet.ko.2025/"
+            },
+            github: {
+                title: "GitHub",
+                body: "For my coding work and sample projects, visit my GitHub profile.",
+                label: "@thurainhtetko123",
+                href: "https://github.com/thurainhtetko123"
+            }
+        };
+
+        contactButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                contactButtons.forEach((b) => b.classList.remove("active"));
+                btn.classList.add("active");
+
+                const key = btn.getAttribute("data-contact");
+                const data = contactData[key];
+
+                contactTitle.textContent = data.title;
+                contactBody.textContent = data.body;
+                contactLink.textContent = data.label;
+                contactLink.href = data.href;
+            });
+        });
+    </script>
+</body>
+
+</html>
