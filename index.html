@@ -248,16 +248,17 @@
         }
 
         .btn-ghost {
+            position: relative;
+            overflow: hidden;
             border-radius: 999px;
             border: 1px solid #9ca3af;
             background-color: #f9fafb;
             color: var(--text-main);
-            padding: 0.6rem 1.3rem;
+            padding: 0.6rem 1.5rem;
             font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
         }
 
         .btn-ghost.small {
@@ -963,7 +964,7 @@
                 </div>
 
                 <div class="work-toggle">
-                    <button class="work-toggle-btn active" data-target="ged">GED</button>
+                    <button class="work-toggle-btn active" data-target="ged" >GED</button>
                     <button class="work-toggle-btn" data-target="dev">Development</button>
                 </div>
 
@@ -1169,6 +1170,8 @@
     <footer>
         <span>© <span id="year"></span> Thurain Htet Ko</span>
         <a href="#hero">Back to top ↑</a>
+        <p onclick="sound()">CLICK</p>
+
     </footer>
 
     <!-- Bottom nav (mobile only) -->
@@ -1188,6 +1191,7 @@
     </div>
 
     <script>
+
         // Set year
         document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -1223,6 +1227,18 @@
                 modeText.textContent = modeContent[mode].text;
             });
         });
+
+        //sound
+
+        function sound() {
+            var sound = new Audio();
+            sound.src = "/images/click1.mp3";
+            sound.play();
+        }
+        const allButtons = document.querySelectorAll("button");
+        allButtons.forEach((btn) =>{
+            btn.addEventListener("click", sound)
+        })
 
         // Work section toggle: GED vs Development
         const workToggleButtons = document.querySelectorAll(".work-toggle-btn");
@@ -1315,7 +1331,6 @@
             btn.addEventListener("click", () => {
                 contactButtons.forEach((b) => b.classList.remove("active"));
                 btn.classList.add("active");
-
                 const key = btn.getAttribute("data-contact");
                 const data = contactData[key];
 
